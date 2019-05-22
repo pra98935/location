@@ -12,7 +12,9 @@ import { Observable } from 'rxjs';
 export class AppComponent {
   constructor(private locationService : LocationService) { }
   title = 'getlocation';
-  public locations = [];
+  lat:number;
+  lng:number;
+  loader:boolean = false;
 
   locationModel:locationModel = new locationModel();
 
@@ -23,11 +25,18 @@ export class AppComponent {
   
 
   public getCity(){
-    // let city = this.locationModel.city.toString().toLowerCase();
-    let city = this.locationModel.city;
+    this.loader = true;
+    let city = this.locationModel.city.toString().toLowerCase();
+    
     this.locationService.getLatLong(city).subscribe(
       (data) => {
-      console.log('data '+JSON.stringify(data));
+        let stringifyData = JSON.stringify(data);
+        let parseData = JSON.parse(stringifyData);
+    
+        this.lat = parseData.results[0].geometry.location.lat;
+        this.lng = parseData.results[0].geometry.location.lng;
+        this.loader = false;
+    
       }
     ) 
   }

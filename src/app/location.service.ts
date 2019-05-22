@@ -14,13 +14,11 @@ export class LocationService {
 
   public getLatLong(city){
 
-    // let httpHeaders = new HttpHeaders ({
-    //   'Content-Type': 'application/jsonp' 
+    // return this.http.jsonp('http://www.datasciencetoolkit.org/maps/api/geocode/json?sensor=false&address=munich', 'callback').subscribe(data => {
+    //   return JSON.stringify(data);
     // });
-    
-    //return city;
 
-    return this.http.get('http://www.datasciencetoolkit.org/maps/api/geocode/json?sensor=false&address=munich');
+    return this.http.jsonp('http://www.datasciencetoolkit.org/maps/api/geocode/json?sensor=false&address='+city, 'callback');
 
   }
 

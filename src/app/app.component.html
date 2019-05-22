@@ -31,6 +31,19 @@
           </div>
           <button (click)="getCity()" class="btn btn-primary">Submit</button>
         </form>
-      </div>    
+    </div> 
+     
+    <div class="col-md-12">
+      <ng-container *ngIf="loader">
+        Please Wait
+      </ng-container>
+
+      <ng-container *ngIf="lat">
+        Latitude:- {{lat}}
+        <br/>
+        Longitude:- {{lng}}
+      </ng-container>
+    </div>  
+      
   </div>
 </div>
