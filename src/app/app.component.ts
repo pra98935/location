@@ -16,6 +16,7 @@ export class AppComponent {
   lng:number;
   cityName:string;
   loader:boolean = false;
+  noData:boolean=false;
 
   locationModel:locationModel = new locationModel();
 
@@ -40,24 +41,34 @@ export class AppComponent {
           // get cordinates
           let stringifyData = JSON.stringify(data);
           let parseData = JSON.parse(stringifyData);
-          
-          this.lat = parseData.results[0].geometry.location.lat;
-          this.lng = parseData.results[0].geometry.location.lng;
 
-          // set data in storage
-          let cordinates = {
-            'lat':this.lat,
-            'lng':this.lng
+          console.log(parseData);
+          let resultCount = parseData.results.length;
+          if(resultCount==0){
+            this.noData = true;
+            this.loader = false;
+          }else{
+            this.lat = parseData.results[0].geometry.location.lat;
+            this.lng = parseData.results[0].geometry.location.lng;
+
+            // set data in storage
+            let cordinates = {
+              'lat':this.lat,
+              'lng':this.lng
+            }
+            this.cityName = parseData.results[0].address_components[0].short_name.toLowerCase();
+            localStorage.setItem(city, JSON.stringify(cordinates));
+
+            this.loader = false;
           }
-          this.cityName = parseData.results[0].address_components[0].short_name.toLowerCase();
-          localStorage.setItem(city, JSON.stringify(cordinates));
 
-          this.loader = false;
+          
       
         }
       )
     }else{
-      //console.log('storage call');
+      this.noData=false;
+      console.log('storage call');
       let getItemStringifyData = localStorage.getItem(city);
       let parseData = JSON.parse(getItemStringifyData);
       this.lat = parseData.lat;

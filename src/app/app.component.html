@@ -29,7 +29,7 @@
             <label for="search">Enter City</label>
             <input type="text" class="form-control" id="search" [(ngModel)]="locationModel.city" name="city" required />
           </div>
-          <button (click)="getCity()" class="btn btn-primary">Submit</button>
+          <button (click)="getCity()" [disabled]='!loc.valid' class="btn btn-primary">Submit</button>
         </form>
     </div> 
      
@@ -38,11 +38,16 @@
         Please Wait
       </ng-container>
 
-      <ng-container *ngIf="lat && loader==false">
+      <ng-container *ngIf="lat && loader==false && noData==false">
         Latitude:- {{lat}}
         <br/>
         Longitude:- {{lng}}
       </ng-container>
+
+      <ng-container *ngIf="noData && loader==false">
+        No Data Found
+      </ng-container>
+
     </div>  
       
   </div>
