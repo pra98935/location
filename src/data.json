@@ -1,0 +1,46 @@
+{
+    "results": [
+      {
+        "address_components": [
+          {
+            "long_name": "Bhind, IN",
+            "types": [
+              "locality",
+              "political"
+            ],
+            "short_name": "Bhind"
+          },
+          {
+            "long_name": "India",
+            "types": [
+              "country",
+              "political"
+            ],
+            "short_name": "IN"
+          }
+        ],
+        "geometry": {
+          "location_type": "APPROXIMATE",
+          "viewport": {
+            "southwest": {
+              "lng": null,
+              "lat": null
+            },
+            "northeast": {
+              "lng": null,
+              "lat": null
+            }
+          },
+          "location": {
+            "lng": 78.78728,
+            "lat": 26.56672
+          }
+        },
+        "types": [
+          "locality",
+          "political"
+        ]
+      }
+    ],
+    "status": "OK"
+  }
