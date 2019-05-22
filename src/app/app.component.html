@@ -38,7 +38,7 @@
         Please Wait
       </ng-container>
 
-      <ng-container *ngIf="lat">
+      <ng-container *ngIf="lat && loader==false">
         Latitude:- {{lat}}
         <br/>
         Longitude:- {{lng}}

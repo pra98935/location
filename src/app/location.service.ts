@@ -13,13 +13,7 @@ export class LocationService {
   constructor(private http: HttpClient) { }
 
   public getLatLong(city){
-
-    // return this.http.jsonp('http://www.datasciencetoolkit.org/maps/api/geocode/json?sensor=false&address=munich', 'callback').subscribe(data => {
-    //   return JSON.stringify(data);
-    // });
-
     return this.http.jsonp('http://www.datasciencetoolkit.org/maps/api/geocode/json?sensor=false&address='+city, 'callback');
-
   }
 
 }

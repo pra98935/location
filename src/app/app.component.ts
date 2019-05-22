@@ -14,6 +14,7 @@ export class AppComponent {
   title = 'getlocation';
   lat:number;
   lng:number;
+  cityName:string;
   loader:boolean = false;
 
   locationModel:locationModel = new locationModel();
@@ -23,22 +24,47 @@ export class AppComponent {
   }
 
   
-
-  public getCity(){
+  /**
+   * get lat and lng
+   * set data in local storage
+   * get data from local storage if city name is available
+   */
+  public getCity(){ 
     this.loader = true;
     let city = this.locationModel.city.toString().toLowerCase();
     
-    this.locationService.getLatLong(city).subscribe(
-      (data) => {
-        let stringifyData = JSON.stringify(data);
-        let parseData = JSON.parse(stringifyData);
-    
-        this.lat = parseData.results[0].geometry.location.lat;
-        this.lng = parseData.results[0].geometry.location.lng;
-        this.loader = false;
-    
-      }
-    ) 
+    if (localStorage.getItem(city) === null) {
+      //console.log('service call');
+      this.locationService.getLatLong(city).subscribe(
+        (data) => {
+          // get cordinates
+          let stringifyData = JSON.stringify(data);
+          let parseData = JSON.parse(stringifyData);
+          
+          this.lat = parseData.results[0].geometry.location.lat;
+          this.lng = parseData.results[0].geometry.location.lng;
+
+          // set data in storage
+          let cordinates = {
+            'lat':this.lat,
+            'lng':this.lng
+          }
+          this.cityName = parseData.results[0].address_components[0].short_name.toLowerCase();
+          localStorage.setItem(city, JSON.stringify(cordinates));
+
+          this.loader = false;
+      
+        }
+      )
+    }else{
+      //console.log('storage call');
+      let getItemStringifyData = localStorage.getItem(city);
+      let parseData = JSON.parse(getItemStringifyData);
+      this.lat = parseData.lat;
+      this.lng = parseData.lng;
+      this.loader = false;
+    }   
+
   }
 }
 
